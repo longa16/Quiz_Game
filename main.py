@@ -1,53 +1,55 @@
-import tkinter as tk
-from tkinter import messagebox
+"""Main page of quiz-game app"""
+import sqlite3
 import time
 
-
-# Fonction appelée lorsqu'une catégorie est sélectionnée
-def category_choice(category):
-    if category == "science":
-        messagebox.showinfo("Catégorie", "Vous avez choisi la catégorie Science.")
-    elif category == "history":
-        messagebox.showinfo("Catégorie", "Vous avez choisi la catégorie Histoire.")
-    elif category == "sport":
-        messagebox.showinfo("Catégorie", "Vous avez choisi la catégorie Sport.")
+from source_code.player import Player
+from source_code.questions import Questions
 
 
-# Fonction pour quitter l'application
-def exit_app():
-    response = messagebox.askyesno("Quitter", "Voulez-vous vraiment quitter ?")
-    if response:
-        root.quit()
+def menu():
+    """Menu of the quiz-game app"""
+    pseudo = input("Enter your pseudo : ")
+    score = 0
+    player = Player(pseudo, score)
+    print("Hello", player.pseudo)
+    print("\n Welcome to quiz-game app \n"
+          "1 create a question\n"
+          "2 history\n"
+          "3 sport\n"
+          "4 science\n"
+          "5 exit\n")
+
+    time.sleep(1)
+
+    while True:
+        choice = int(input("Choose a category: "))
+
+        if choice == 1:
+            category = input("What category would you like to: ")
+            title = input("What is your title?: ")
+            answer = input("What is your answer?: ")
+            difficulty = input("What is the level of difficulty?: ")
+            questions = Questions(category, title, answer, difficulty)
+
+        elif choice == 2:
+            print("History category")
+        elif choice == 3:
+            print("Sport category")
+        elif choice == 4:
+            print("Science category")
+        elif choice == 5:
+            print("Good Bye ;)")
+            break
+        else:
+            print("Error, change it.")
+
+        time.sleep(1)
 
 
-# Création de la fenêtre principale
-root = tk.Tk()
-root.title("Quiz Game App")
-root.geometry("300x250")
+connection = sqlite3.connect('quiz.db')
+cursor = connection.cursor()
 
-# Texte d'accueil
-welcome_label = tk.Label(root, text="Bienvenue dans Quiz-Game App", font=("Arial", 14))
-welcome_label.pack(pady=20)
+connection.close()
 
-# Choix de la catégorie
-category_label = tk.Label(root, text="Choisissez une catégorie :", font=("Arial", 12))
-category_label.pack(pady=10)
-
-# Bouton pour la catégorie Science
-science_button = tk.Button(root, text="Science", font=("Arial", 12), command=lambda: category_choice("science"))
-science_button.pack(pady=5)
-
-# Bouton pour la catégorie Histoire
-history_button = tk.Button(root, text="Histoire", font=("Arial", 12), command=lambda: category_choice("history"))
-history_button.pack(pady=5)
-
-# Bouton pour la catégorie Sport
-sport_button = tk.Button(root, text="Sport", font=("Arial", 12), command=lambda: category_choice("sport"))
-sport_button.pack(pady=5)
-
-# Bouton pour quitter l'application
-exit_button = tk.Button(root, text="Quitter", font=("Arial", 12), command=exit_app)
-exit_button.pack(pady=20)
-
-# Lancement de la boucle principale de l'interface
-root.mainloop()
+if __name__ == "__main__":
+    menu()
