@@ -1,3 +1,6 @@
+import sqlite3
+
+
 class Questions:
     """Represent a question.
     Attributes:
@@ -14,4 +17,16 @@ class Questions:
         self.answer = answer
 
     def print_questions(self):
+        """Print the questions"""
         print(self.category, self.title, self.answer, self.difficulty)
+
+    def create_question(self):
+        """Create a new question"""
+        conn = sqlite3.connect('quiz.db')
+        cur = conn.cursor()
+        cur.execute('''
+                    INSERT INTO questions (title, answer, category, difficulty )  
+                    VALUES (?, ?, ?, ? )
+                ''', (self.title, self.answer, self.category, self.difficulty))
+        conn.commit()
+        conn.close()

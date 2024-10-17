@@ -1,3 +1,7 @@
+import sqlite3
+
+
+
 class Player:
     """Represents a player
     Attributes:
@@ -10,3 +14,16 @@ class Player:
 
     def print_player_info(self):
         print(self.pseudo, self.score)
+
+    def insert_player_database(self):
+        conn = sqlite3.connect('quiz.db')
+        cur = conn.cursor()
+        cur.execute('''
+            INSERT INTO qu_user (pseudo, score) 
+            VALUES (?, ?)
+        ''', (self.pseudo, self.score))
+        conn.commit()
+        conn.close()
+
+
+
