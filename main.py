@@ -1,125 +1,68 @@
+from source_code.question import *
+
 import tkinter as tk
 from tkinter import messagebox
-from source_code.player import Player
-from source_code.questions import Questions
+import random
+from main import select_questions, load_questions_from_file
 
 
 class QuizApp:
+    """ Main application"""
     def __init__(self, root):
         self.root = root
         self.root.title("Quiz Game")
+        self.root.geometry("600x400")
 
-        # Variables d'état
-        self.pseudo = tk.StringVar()
-        self.difficulty = tk.StringVar()
-        self.category = tk.StringVar()
-        self.title = tk.StringVar()
-        self.answer = tk.StringVar()
-        self.player = None
+        self.questions = load_questions_from_file('source_code/database.json')
+        self.selected_questions = select_questions(self.questions)
 
-        # Interface de démarrage
-        self.create_start_interface()
+        self.current_question_index = 0
 
-    def create_start_interface(self):
-        """Crée l'interface de démarrage."""
-        self.clear_interface()
+        self.question_label = tk.Label(self.root, text="", font=("Arial", 14), wraplength=500)
+        self.question_label.pack(pady=20)
 
-        # Entrée pour le pseudo
-        tk.Label(self.root, text="Enter your pseudo:").pack()
-        tk.Entry(self.root, textvariable=self.pseudo).pack()
+        self.options = []
+        for i in range(4):
+            btn = tk.Button(self.root, text="", font=("Arial", 12), width=20, command=lambda i=i: self.check_answer(i))
+            btn.pack(pady=5)
+            self.options.append(btn)
 
-        # Bouton pour démarrer le jeu
-        tk.Button(self.root, text="Start Game", command=self.start_game).pack(pady=10)
+        self.next_button = tk.Button(self.root, text="Suivant", font=("Arial", 12), command=self.next_question)
+        self.next_button.pack(pady=20)
 
-    def start_game(self):
-        """Démarre le jeu après que l'utilisateur ait entré son pseudo."""
-        pseudo = self.pseudo.get()
-        if pseudo:
-            self.player = Player(pseudo, 0)
-            Player.insert_player_database(self.player)
-            self.choose_difficulty_interface()
+        self.load_question()
+
+    def load_question(self):
+        """Load questions from the database """
+        if self.current_question_index < len(self.selected_questions):
+            question_data = self.selected_questions[self.current_question_index]
+            self.question_label.config(text=question_data['question'])
+
+            for i, option in enumerate(question_data['options']):
+                self.options[i].config(text=option)
+
+    def check_answer(self, selected_index):
+        """Check if selected question is correct"""
+        question_data = self.selected_questions[self.current_question_index]
+        correct_answer = question_data['answer']
+
+        # Si la réponse est correcte
+        if correct_answer == chr(ord('A') + selected_index):
+            messagebox.showinfo("Bonne réponse", "Bonne réponse !")
         else:
-            messagebox.showerror("Error", "Please enter a pseudo.")
+            messagebox.showinfo("Mauvaise réponse", f"Mauvaise réponse ! La bonne réponse était {correct_answer}.")
 
-    def choose_difficulty_interface(self):
-        """Crée l'interface pour choisir la difficulté."""
-        self.clear_interface()
+        self.next_button.config(state=tk.NORMAL)
 
-        tk.Label(self.root, text=f"Hello {self.player.pseudo}, choose difficulty:").pack()
-
-        # Sélection de la difficulté
-        difficulties = [("Easy", "easy"), ("Medium", "medium"), ("Hard", "hard")]
-        for text, value in difficulties:
-            tk.Radiobutton(self.root, text=text, variable=self.difficulty, value=value).pack()
-
-        tk.Button(self.root, text="Next", command=self.show_categories_interface).pack(pady=10)
-
-    def show_categories_interface(self):
-        """Affiche le menu de sélection de catégories."""
-        self.clear_interface()
-
-        tk.Label(self.root, text="Choose a category:").pack()
-
-        # Boutons pour les différentes catégories
-        tk.Button(self.root, text="Create a question", command=self.create_question_interface).pack()
-        tk.Button(self.root, text="History", command=lambda: self.show_category("History")).pack()
-        tk.Button(self.root, text="Sport", command=lambda: self.show_category("Sport")).pack()
-        tk.Button(self.root, text="Science", command=lambda: self.show_category("Science")).pack()
-
-        # Option pour quitter
-        tk.Button(self.root, text="Exit", command=self.root.quit).pack(pady=10)
-
-    def show_category(self, category):
-        """Affiche un message avec la catégorie choisie."""
-        messagebox.showinfo("Category", f"You selected {category} category.")
-
-    def create_question_interface(self):
-        """Crée une interface pour ajouter une nouvelle question."""
-        self.clear_interface()
-
-        tk.Label(self.root, text="Create a new question").pack(pady=10)
-
-        tk.Label(self.root, text="Category:").pack()
-        tk.Entry(self.root, textvariable=self.category).pack()
-
-        tk.Label(self.root, text="Title:").pack()
-        tk.Entry(self.root, textvariable=self.title).pack()
-
-        tk.Label(self.root, text="Answer:").pack()
-        tk.Entry(self.root, textvariable=self.answer).pack()
-
-        tk.Label(self.root, text="Difficulty:").pack()
-        tk.Entry(self.root, textvariable=self.difficulty).pack()
-
-        tk.Button(self.root, text="Create", command=self.create_question).pack(pady=10)
-
-    def create_question(self):
-        """Enregistre la question créée par l'utilisateur."""
-        category = self.category.get()
-        title = self.title.get()
-        answer = self.answer.get()
-        difficulty = self.difficulty.get()
-
-        if category and title and answer and difficulty:
-            question = Questions(category, title, answer, difficulty)
-            Questions.create_question(question)
-            messagebox.showinfo("Success", "Question created successfully!")
-            self.show_categories_interface()
-        else:
-            messagebox.showerror("Error", "Please fill all fields.")
-
-    def clear_interface(self):
-        """Efface tous les widgets de l'interface."""
-        for widget in self.root.winfo_children():
-            widget.destroy()
-
-
-def run_app():
-    """Lance l'application Tkinter."""
-    root = tk.Tk()
-    app = QuizApp(root)
-    root.mainloop()
+    def next_question(self):
+        """Go to the next question"""
+        self.current_question_index += 1
+        self.load_question()
+        if self.current_question_index >= len(self.selected_questions):
+            self.root.quit()
 
 
 if __name__ == "__main__":
-    run_app()
+    root = tk.Tk()
+    app = QuizApp(root)
+    root.mainloop()
