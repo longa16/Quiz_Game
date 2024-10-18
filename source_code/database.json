@@ -1,0 +1,206 @@
+[
+    {
+        "question": "Quelle est la capitale de la France ?",
+        "options": ["A) Paris", "B) Lyon", "C) Marseille", "D) Toulouse"],
+        "answer": "A",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Quel est le plus grand océan du monde ?",
+        "options": ["A) Océan Atlantique", "B) Océan Pacifique", "C) Océan Indien", "D) Océan Arctique"],
+        "answer": "B",
+        "difficulty": "medium"
+    },
+    {
+        "question": "Quelle planète est la plus proche du soleil ?",
+        "options": ["A) Terre", "B) Vénus", "C) Mars", "D) Mercure"],
+        "answer": "D",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Qui a écrit 'Les Misérables' ?",
+        "options": ["A) Victor Hugo", "B) Gustave Flaubert", "C) Émile Zola", "D) Albert Camus"],
+        "answer": "A",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Combien y a-t-il de continents dans le monde ?",
+        "options": ["A) 5", "B) 6", "C) 7", "D) 8"],
+        "answer": "C",
+        "difficulty": "easy"
+
+    },
+    {
+        "question": "Qui a inventé la relativité générale ?",
+        "options": ["A) Albert Einstein", "B) Isaac Newton", "C) Nikola Tesla", "D) Marie Curie"],
+        "answer": "A"
+    },
+    {
+        "question": "Quel est l'élément chimique avec le symbole O ?",
+        "options": ["A) Or", "B) Oxygène", "C) Osmium", "D) Ozone"],
+        "answer": "B",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Quelle est la plus grande planète de notre système solaire ?",
+        "options": ["A) Mars", "B) Jupiter", "C) Saturne", "D) Neptune"],
+        "answer": "B",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Quelle est la capitale du Japon ?",
+        "options": ["A) Kyoto", "B) Tokyo", "C) Osaka", "D) Nagoya"],
+        "answer": "B",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Quelle est la langue officielle du Brésil ?",
+        "options": ["A) Espagnol", "B) Portugais", "C) Anglais", "D) Français"],
+        "answer": "B",
+        "difficulty": "medium"
+    },
+    {
+        "question": "Combien de cases quantiques compte l'atome d'azote  ?",
+        "options": ["A) 1", "B) 3", "C) 4", "D) 2"],
+        "answer": "C",
+        "difficulty": "hard"
+    },
+    {
+        "question": "Dans quel océan se déverse l'Amazone ?",
+        "options": ["A) pacifique", "B) indien", "C) atlantique", "D) artique"],
+        "answer": "A",
+        "difficulty": "medium"
+    },
+    {
+        "question": "Quelle est la capital du Gabon?",
+        "options": ["A) Douala", "B) Abidjan", "C) Kinshasa", "D) Libreville"],
+        "answer": "D",
+        "difficulty": "medium"
+    },
+    {
+        "question": "En quel année le rugby est-il devenu une discipline professionnelle ?",
+        "options": ["A) 1967", "B) 1990", "C) 1995", "D) 2002"],
+        "answer": "C",
+        "difficulty": "hard"
+    },
+    {
+        "question": "Comment fut nommé le volley-ball à ses débuts ?",
+        "options": ["A) Pintonette", "B) Mintonette", "C) Detonette", "D) Sintonette"],
+        "answer": "B",
+        "difficulty": "hard"
+    },
+    {
+        "question": "Dans quelle ville française la pétanque est-elle née ?",
+        "options": ["A) La Ciotat", "B) Valenciennes", "C) Perpignan", "D) Marseille"],
+        "answer": "A",
+        "difficulty": "hard"
+    },
+    {
+        "question": "Lequel de ces os du corps humain est situé dans l'avant-bras ?",
+        "options": ["A) l'humerus", "B) le sacrum", "C) La rotule", "D) Le radius"],
+        "answer": "D",
+        "difficulty": "medium"
+    },
+    {
+        "question": "En 1956, qui fut le premier vainqueur du Ballon d’Or ?",
+        "options": ["A) Kylian Mbappe", "B) Raymond Kopa", "C)Stanley Matthews", "D) Hristo Stoichkov"],
+        "answer": "C",
+        "difficulty": "hard"
+    },
+    {
+        "question": "Combien de cordes vocales une personne possède-t-elle ?",
+        "options": ["A) 5", "B) 2", "C) 10", "D) 3"],
+        "answer": "B",
+        "difficulty": "medium"
+    },
+    {
+        "question": "Quel est le nom scientifique donné aux globules rouges ?",
+        "options": ["A) Eréthrocyte", "B) Deréthrocyte", "C) Phyréthrocyte", "D) Téréthrocyte"],
+        "answer": "A",
+        "difficulty": "hard"
+    },
+    {
+        "question": "Dans quel pays se trouve le Machu Picchu ?",
+        "options": ["A) France", "B) Bolivie", "C) Colombie", "D) Perou"],
+        "answer": "D",
+        "difficulty": "medium"
+    },
+    {
+        "question": "Quel(le) athlète possède le plus de médailles d'or aux Jeux Olympiques ?",
+        "options": ["A) Usaint bolt", "B) Elon musk", "C) Michael Phelps", "D) Teddy Riner"],
+        "answer": "C",
+        "difficulty": "medium"
+    },
+    {
+        "question": "Quelle action au rugby a pour but pour un attaquant d'aplatir le ballon dans l'en-but adverse ?",
+        "options": ["A) tentative", "B) essai", "C) possibilté", "D) experience"],
+        "answer": "B",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Au tir à l'arc, quelle est la couleur au centre de la cible ?",
+        "options": ["A) jaune", "B) bleu", "C) rouge", "D) vert"],
+        "answer": "A",
+        "difficulty": "hard"
+    },
+    {
+        "question": "Comment s'appelle la science des drogues ?",
+        "options": ["A) La toxicomanie", "B) La droguologie", "C) Aucune reponse", "D) La pharmacologie"],
+        "answer": "D",
+        "difficulty": "easy"
+    },
+    {
+        "question": "À quoi est due la coloration verte présente sur de nombreuses plantes ?",
+        "options": ["A) Le chloroplaste", "B) Le shakra", "C) La chlorophylle", "D) Le mana"],
+        "answer": "C",
+        "difficulty": "medium"
+    },
+    {
+        "question": "En quelle langue parle-t-on en Argentine ?",
+        "options": ["A) Le français", "B) L'espagnol", "C) Le portuguais", "D) L'argentin"],
+        "answer": "B",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Laquelle de ces villes est la capitale de l'Union européenne ?",
+        "options": ["A) Bruxelles", "B) Parisl", "C) Berlin", "D) Dublin"],
+        "answer": "A",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Quelle est la montagne la plus élevée du monde ?",
+        "options": ["A) Mont Cameroun", "B) Himalaya", "C) Kilimandjaro", "D) Everest"],
+        "answer": "D",
+        "difficulty": "easy"
+    },
+    {
+        "question": "Cite le fleuve passant par la frontière franco-allemande ?",
+        "options": ["A) Loire", "B) Garonne", "C) Rhin", "D) Seine"],
+        "answer": "C",
+        "difficulty": "medium"
+    },
+    {
+        "question": "Quelle est la capitale du Venezuela ?",
+        "options": ["A) Bueno Aire", "B) Caracas", "C) Montevideo", "D) Lima"],
+        "answer": "B",
+        "difficulty": "hard"
+    },
+    {
+        "question": "Split, Spare, Strike... sont des termes que l'on entend souvent",
+        "options": ["A) Bowling", "B) Football", "C) Petanque", "D) Padel"],
+        "answer": "A",
+        "difficulty": "easy"
+    },
+    {
+        "question": "De combien de joueurs est composée une équipe de basket-ball ?",
+        "options": ["A) 10", "B) 6", "C) 3", "D) 5"],
+        "answer": "D",
+        "difficulty": "easy"
+    },
+    {
+        "question": "qui est le 16e président des états unis d'amerique",
+        "options": ["A) Zachary Taylor", "B) James Buchanan", "C) Abraham Lincoln", "D) John Adams"],
+        "answer": "C",
+        "difficulty": "medium"
+    }
+]
