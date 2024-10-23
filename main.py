@@ -3,6 +3,7 @@ import random
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 from source_code.scoring import Scoring
+from source_code.bonus import Timer
 
 def load_questions_from_file(filename):
     """ Loading the JSON file containing the questions """
@@ -38,6 +39,9 @@ class QuizApp:
         self.leaderboard_page = 0
         self.score_saved = False
         self.difficulty = ""
+        self.timer = None
+        self.time_left = 15  # Temps en secondes
+        self.streak = 0  # Ajout de la variable de streak
 
         # Créer un conteneur principal pour centrer les éléments avec place
         self.main_frame = tk.Frame(self.root, bg="#f0f0f0")
@@ -90,9 +94,21 @@ class QuizApp:
         self.question_label = tk.Label(self.main_frame, text="", font=("Helvetica", 16), wraplength=600, bg="#f0f0f0", fg="#333")
         self.question_label.pack(pady=(100, 20))  # Ajout d'un padding top plus important pour éloigner les questions du logo
 
-        # Style du label de score
-        self.score_label = tk.Label(self.main_frame, text=f"Score: {self.scoring.get_score()}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
-        self.score_label.pack(pady=10)
+        # Style du label de score, du chronomètre et de la streak
+        self.score_timer_streak_frame = tk.Frame(self.main_frame, bg="#f0f0f0")
+        self.score_timer_streak_frame.pack(pady=10)
+
+        self.score_label = tk.Label(self.score_timer_streak_frame, text=f"Score: {self.scoring.get_score()}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
+        self.score_label.pack(side=tk.LEFT, padx=10)
+
+        self.timer_label = tk.Label(self.score_timer_streak_frame, text=f"Temps restant: {self.time_left}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
+        self.timer_label.pack(side=tk.LEFT, padx=10)
+
+        self.streak_label = tk.Label(self.score_timer_streak_frame, text=f"Streak: {self.streak}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
+        self.streak_label.pack(side=tk.LEFT, padx=10)
+
+        self.timer = Timer(self.root, self.time_left, self.timer_label)
+        self.timer.next_question = self.next_question
 
         # Frame pour contenir les options côte à côte
         self.options_frame = tk.Frame(self.main_frame, bg="#f0f0f0")
@@ -121,6 +137,7 @@ class QuizApp:
                 self.options[i].config(text=option)
 
             self.scoring.start_question()
+            self.timer.start_timer()
 
     def check_answer(self, selected_index):
         """Check if selected question is correct"""
@@ -132,19 +149,21 @@ class QuizApp:
 
         if self.scoring.check_answer(correct_answer, selected_index):
             self.options[selected_index].config(bg="#4CAF50", fg="white")
-            # messagebox.showinfo("Bonne réponse", f"Bonne réponse ! Votre score est maintenant {self.scoring.get_score()}.")
+            self.streak += 1  # Incrémenter la streak si la réponse est correcte
         else:
             self.options[selected_index].config(bg="#F44336", fg="white")
             correct_index = ord(correct_answer) - ord('A')
             self.options[correct_index].config(bg="#4CAF50", fg="white")
-            # messagebox.showinfo("Mauvaise réponse", f"Mauvaise réponse ! La bonne réponse était {correct_answer}.")
+            self.streak = 0  # Réinitialiser la streak si la réponse est incorrecte
 
         self.answered = True
         self.next_button.config(state=tk.NORMAL)
         self.score_label.config(text=f"Score: {self.scoring.get_score()}")
+        self.streak_label.config(text=f"Streak: {self.streak}")  # Mettre à jour le label de la streak
 
     def next_question(self):
         """Go to the next question"""
+        self.timer.cancel_timer()
         self.answered = False
         for btn in self.options:
             btn.config(bg="#e7e7e7", fg="#333")
