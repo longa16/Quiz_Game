@@ -47,7 +47,7 @@ class QuizApp:
         self.main_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Style du logo
-        self.logo_image = tk.PhotoImage(file="source_code/logoquiz.png")
+        self.logo_image = tk.PhotoImage(file="source_code/img/logoquiz.png")
         self.logo_label = tk.Label(self.root, image=self.logo_image, bg="#f0f0f0")
         self.logo_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 

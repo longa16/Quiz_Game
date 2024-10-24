@@ -30,4 +30,4 @@ def select_questions(questions, easy_count=5, medium_count=5, hard_count=5):
     return selected_questions
 
 
-questions = load_questions_from_file('source_code/database.json')
+questions = load_questions_from_file('database.json')
