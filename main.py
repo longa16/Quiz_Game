@@ -5,15 +5,18 @@ from tkinter import messagebox, simpledialog
 from source_code.scoring import Scoring
 from source_code.bonus import Timer
 
+
 def load_questions_from_file(filename):
     """ Loading the JSON file containing the questions """
     with open(filename, 'r', encoding='utf-8') as f:
         questions = json.load(f)
     return questions
 
+
 def filter_questions_by_difficulty(questions, difficulty):
     """ Filtering the questions by difficulty """
     return [q for q in questions if q.get('difficulty') == difficulty]
+
 
 def select_questions(questions, difficulty, count=5):
     """ Selecting the questions by difficulty """
@@ -21,8 +24,10 @@ def select_questions(questions, difficulty, count=5):
     selected_questions = random.sample(filtered_questions, count)
     return selected_questions
 
+
 class QuizApp:
     """ Main application"""
+
     def __init__(self, root):
         self.root = root
         self.root.title("Culture Quiz")
@@ -52,10 +57,12 @@ class QuizApp:
 
         # Afficher l'image du logo avec un positionnement centré (relx 0.5 pour centrer horizontalement)
         self.logo_label = tk.Label(self.root, image=self.logo_image, bg="#f0f0f0")
-        self.logo_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)  # relx=0.5 permet de centrer horizontalement, rely=0.3 pour ajuster verticalement
+        self.logo_label.place(relx=0.5, rely=0.3,
+                              anchor=tk.CENTER)  # relx=0.5 permet de centrer horizontalement, rely=0.3 pour ajuster verticalement
 
         # Style du label de difficulté
-        self.difficulty_label = tk.Label(self.main_frame, text="Choisissez la difficulté :", font=("Helvetica", 16), bg="#f0f0f0", fg="#333")
+        self.difficulty_label = tk.Label(self.main_frame, text="Choisissez la difficulté :", font=("Helvetica", 16),
+                                         bg="#f0f0f0", fg="#333")
         self.difficulty_label.pack(pady=10)
 
         # Frame pour contenir les boutons de difficulté côte à côte
@@ -73,7 +80,8 @@ class QuizApp:
         for i, difficulty in enumerate(['Easy', 'Medium', 'Hard']):
             # Utilisation des couleurs spécifiques pour chaque difficulté
             btn = tk.Button(self.difficulty_frame, text=difficulty.capitalize(), font=("Helvetica", 14), width=15,
-                            bg=button_colors[difficulty], fg="white", activebackground="#005f73", activeforeground="white",
+                            bg=button_colors[difficulty], fg="white", activebackground="#005f73",
+                            activeforeground="white",
                             relief="raised", bd=4, command=lambda d=difficulty: self.start_quiz(d))
             btn.grid(row=0, column=i, padx=10)
             self.difficulty_buttons.append(btn)
@@ -91,20 +99,25 @@ class QuizApp:
         self.difficulty_label.pack_forget()
 
         # Style du label de question
-        self.question_label = tk.Label(self.main_frame, text="", font=("Helvetica", 16), wraplength=600, bg="#f0f0f0", fg="#333")
-        self.question_label.pack(pady=(100, 20))  # Ajout d'un padding top plus important pour éloigner les questions du logo
+        self.question_label = tk.Label(self.main_frame, text="", font=("Helvetica", 16), wraplength=600, bg="#f0f0f0",
+                                       fg="#333")
+        self.question_label.pack(
+            pady=(100, 20))  # Ajout d'un padding top plus important pour éloigner les questions du logo
 
         # Style du label de score, du chronomètre et de la streak
         self.score_timer_streak_frame = tk.Frame(self.main_frame, bg="#f0f0f0")
         self.score_timer_streak_frame.pack(pady=10)
 
-        self.score_label = tk.Label(self.score_timer_streak_frame, text=f"Score: {self.scoring.get_score()}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
+        self.score_label = tk.Label(self.score_timer_streak_frame, text=f"Score: {self.scoring.get_score()}",
+                                    font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
         self.score_label.pack(side=tk.LEFT, padx=10)
 
-        self.timer_label = tk.Label(self.score_timer_streak_frame, text=f"Temps restant: {self.time_left}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
+        self.timer_label = tk.Label(self.score_timer_streak_frame, text=f"Temps restant: {self.time_left}",
+                                    font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
         self.timer_label.pack(side=tk.LEFT, padx=10)
 
-        self.streak_label = tk.Label(self.score_timer_streak_frame, text=f"Streak: {self.streak}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
+        self.streak_label = tk.Label(self.score_timer_streak_frame, text=f"Streak: {self.streak}",
+                                     font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
         self.streak_label.pack(side=tk.LEFT, padx=10)
 
         self.timer = Timer(self.root, self.time_left, self.timer_label)
@@ -117,12 +130,16 @@ class QuizApp:
         self.options = []
         for i in range(4):
             # Style des boutons d'options, côte à côte
-            btn = tk.Button(self.options_frame, text="", font=("Helvetica", 14), width=25, bg="#e7e7e7", fg="#333", activebackground="#d4d4d4", activeforeground="#333", relief="solid", bd=2, command=lambda i=i: self.check_answer(i))
+            btn = tk.Button(self.options_frame, text="", font=("Helvetica", 14), width=25, bg="#e7e7e7", fg="#333",
+                            activebackground="#d4d4d4", activeforeground="#333", relief="solid", bd=2,
+                            command=lambda i=i: self.check_answer(i))
             btn.grid(row=0, column=i, padx=5)
             self.options.append(btn)
 
         # Style du bouton "Suivant"
-        self.next_button = tk.Button(self.main_frame, text="Suivant", font=("Helvetica", 14), fg="black", activebackground="#45a049", activeforeground="white", relief="solid", bd=2, command=self.next_question)
+        self.next_button = tk.Button(self.main_frame, text="Suivant", font=("Helvetica", 14), fg="black",
+                                     activebackground="#45a049", activeforeground="white", relief="solid", bd=2,
+                                     command=self.next_question)
         self.next_button.pack(pady=20)
 
         self.load_question()
@@ -194,7 +211,8 @@ class QuizApp:
         self.end_screen_frame = tk.Frame(self.root, bg="#f0f0f0")
         self.end_screen_frame.place(relx=0.5, rely=0.65, anchor=tk.CENTER)  # Ajustement de la valeur de rely
 
-        self.end_screen_label = tk.Label(self.end_screen_frame, text="Classement :", font=("Helvetica", 16), bg="#f0f0f0", fg="#333")
+        self.end_screen_label = tk.Label(self.end_screen_frame, text="Classement :", font=("Helvetica", 16),
+                                         bg="#f0f0f0", fg="#333")
         self.end_screen_label.grid(row=0, column=0, columnspan=3, pady=10)
 
         self.leaderboard_frame = tk.Frame(self.end_screen_frame, bg="#f0f0f0")
@@ -202,25 +220,35 @@ class QuizApp:
         self.leaderboard_frame.grid_propagate(False)  # Empêche le cadre de s'adapter à la taille de son contenu
         self.leaderboard_frame.grid_rowconfigure(0, weight=1)  # Définit la hauteur du cadre
 
-        self.leaderboard_label = tk.Label(self.leaderboard_frame, text="", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
+        self.leaderboard_label = tk.Label(self.leaderboard_frame, text="", font=("Helvetica", 14), bg="#f0f0f0",
+                                          fg="#333")
         self.leaderboard_label.pack()
 
-        self.prev_button = tk.Button(self.end_screen_frame, text="Précédent", font=("Helvetica", 14), bg="#e7e7e7", fg="#333", activebackground="#d4d4d4", activeforeground="#333", relief="solid", bd=2, command=self.prev_leaderboard_page)
+        self.prev_button = tk.Button(self.end_screen_frame, text="Précédent", font=("Helvetica", 14), bg="#e7e7e7",
+                                     fg="#333", activebackground="#d4d4d4", activeforeground="#333", relief="solid",
+                                     bd=2, command=self.prev_leaderboard_page)
         self.prev_button.grid(row=2, column=0, padx=10)
 
-        self.next_button = tk.Button(self.end_screen_frame, text="Suivant", font=("Helvetica", 14), bg="#e7e7e7", fg="#333", activebackground="#d4d4d4", activeforeground="#333", relief="solid", bd=2, command=self.next_leaderboard_page)
+        self.next_button = tk.Button(self.end_screen_frame, text="Suivant", font=("Helvetica", 14), bg="#e7e7e7",
+                                     fg="#333", activebackground="#d4d4d4", activeforeground="#333", relief="solid",
+                                     bd=2, command=self.next_leaderboard_page)
         self.next_button.grid(row=2, column=2, padx=10)
 
-        self.name_label = tk.Label(self.end_screen_frame, text="Entrez votre pseudo :", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
+        self.name_label = tk.Label(self.end_screen_frame, text="Entrez votre pseudo :", font=("Helvetica", 14),
+                                   bg="#f0f0f0", fg="#333")
         self.name_label.grid(row=3, column=0, pady=20)
 
         self.name_entry = tk.Entry(self.end_screen_frame, font=("Helvetica", 14))
         self.name_entry.grid(row=3, column=1, pady=20)
 
-        self.save_button = tk.Button(self.end_screen_frame, text="Enregistrer le score", font=("Helvetica", 14), bg="#4CAF50", fg="white", activebackground="#45a049", activeforeground="white", relief="solid", bd=2, command=self.save_player_score)
+        self.save_button = tk.Button(self.end_screen_frame, text="Enregistrer le score", font=("Helvetica", 14),
+                                     bg="#4CAF50", fg="white", activebackground="#45a049", activeforeground="white",
+                                     relief="solid", bd=2, command=self.save_player_score)
         self.save_button.grid(row=3, column=2, padx=10, pady=20)
 
-        self.quit_button = tk.Button(self.end_screen_frame, text="Quitter", font=("Helvetica", 14), bg="#F44336", fg="white", activebackground="#d32f2f", activeforeground="white", relief="solid", bd=2, command=self.root.quit)
+        self.quit_button = tk.Button(self.end_screen_frame, text="Quitter", font=("Helvetica", 14), bg="#F44336",
+                                     fg="white", activebackground="#d32f2f", activeforeground="white", relief="solid",
+                                     bd=2, command=self.root.quit)
         self.quit_button.grid(row=5, column=1, padx=10, pady=10)
 
         self.update_leaderboard()
@@ -274,6 +302,7 @@ class QuizApp:
                 self.save_button.config(state=tk.DISABLED)
             else:
                 messagebox.showwarning("Pseudo manquant", "Veuillez entrer un pseudo.")
+
 
 if __name__ == "__main__":
     root = tk.Tk()
