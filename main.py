@@ -27,10 +27,9 @@ class QuizApp:
         self.root = root
         self.root.title("Culture Quiz")
         self.root.state('zoomed')
-
-        # Couleur de fond principale
         self.root.configure(bg="#f0f0f0")
 
+        # Initialisation des variables
         self.questions = load_questions_from_file('source_code/database.json')
         self.selected_questions = []
         self.current_question_index = 0
@@ -40,38 +39,36 @@ class QuizApp:
         self.score_saved = False
         self.difficulty = ""
         self.timer = None
-        self.time_left = 15  # Temps en secondes
-        self.streak = 0  # Ajout de la variable de streak
+        self.time_left = 15
+        self.streak = 0
 
-        # Créer un conteneur principal pour centrer les éléments avec place
+        # Frame pour placer les éléments au milieu
         self.main_frame = tk.Frame(self.root, bg="#f0f0f0")
         self.main_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        # Charger l'image (logo)
-        self.logo_image = tk.PhotoImage(file="source_code/logoquiz.png")  # Remplace par le chemin de ton image
-
-        # Afficher l'image du logo avec un positionnement centré (relx 0.5 pour centrer horizontalement)
+        # Style du logo
+        self.logo_image = tk.PhotoImage(file="source_code/logoquiz.png")
         self.logo_label = tk.Label(self.root, image=self.logo_image, bg="#f0f0f0")
-        self.logo_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)  # relx=0.5 permet de centrer horizontalement, rely=0.3 pour ajuster verticalement
+        self.logo_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 
-        # Style du label de difficulté
+        # Style du label "Choisissez la difficulté"
         self.difficulty_label = tk.Label(self.main_frame, text="Choisissez la difficulté :", font=("Helvetica", 16), bg="#f0f0f0", fg="#333")
         self.difficulty_label.pack(pady=10)
 
-        # Frame pour contenir les boutons de difficulté côte à côte
+        # Frame pour placer le label en fonction du logo
         self.difficulty_frame = tk.Frame(self.main_frame, bg="#f0f0f0")
         self.difficulty_frame.pack(pady=10)
 
+        # Style des boutons
         self.difficulty_buttons = []
-        # Ajout des couleurs spécifiques pour chaque bouton
         button_colors = {
             'Easy': '#4CAF50',  # Vert
             'Medium': '#FF9800',  # Jaune/Orange
             'Hard': '#F44336'  # Rouge
         }
 
+        # Application des styles et affichage des boutons
         for i, difficulty in enumerate(['Easy', 'Medium', 'Hard']):
-            # Utilisation des couleurs spécifiques pour chaque difficulté
             btn = tk.Button(self.difficulty_frame, text=difficulty.capitalize(), font=("Helvetica", 14), width=15,
                             bg=button_colors[difficulty], fg="white", activebackground="#005f73", activeforeground="white",
                             relief="raised", bd=4, command=lambda d=difficulty: self.start_quiz(d))
@@ -90,38 +87,39 @@ class QuizApp:
 
         self.difficulty_label.pack_forget()
 
-        # Style du label de question
+        # Style pour les questions
         self.question_label = tk.Label(self.main_frame, text="", font=("Helvetica", 16), wraplength=600, bg="#f0f0f0", fg="#333")
-        self.question_label.pack(pady=(100, 20))  # Ajout d'un padding top plus important pour éloigner les questions du logo
+        self.question_label.pack(pady=(100, 20))
 
-        # Style du label de score, du chronomètre et de la streak
+        # Frame pour placer le timer à coté du score
         self.score_timer_streak_frame = tk.Frame(self.main_frame, bg="#f0f0f0")
         self.score_timer_streak_frame.pack(pady=10)
 
+        # Style pour le score
         self.score_label = tk.Label(self.score_timer_streak_frame, text=f"Score: {self.scoring.get_score()}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
         self.score_label.pack(side=tk.LEFT, padx=10)
 
+        # Style pour le timer
         self.timer_label = tk.Label(self.score_timer_streak_frame, text=f"Temps restant: {self.time_left}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
         self.timer_label.pack(side=tk.LEFT, padx=10)
 
+        # Style pour la streak
         self.streak_label = tk.Label(self.score_timer_streak_frame, text=f"Streak: {self.streak}", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
         self.streak_label.pack(side=tk.LEFT, padx=10)
 
         self.timer = Timer(self.root, self.time_left, self.timer_label)
         self.timer.next_question = self.next_question
 
-        # Frame pour contenir les options côte à côte
         self.options_frame = tk.Frame(self.main_frame, bg="#f0f0f0")
         self.options_frame.pack(pady=10)
 
+        # Affichage des boutons de réponses
         self.options = []
         for i in range(4):
-            # Style des boutons d'options, côte à côte
             btn = tk.Button(self.options_frame, text="", font=("Helvetica", 14), width=25, bg="#e7e7e7", fg="#333", activebackground="#d4d4d4", activeforeground="#333", relief="solid", bd=2, command=lambda i=i: self.check_answer(i))
             btn.grid(row=0, column=i, padx=5)
             self.options.append(btn)
 
-        # Style du bouton "Suivant"
         self.next_button = tk.Button(self.main_frame, text="Suivant", font=("Helvetica", 14), fg="black", activebackground="#45a049", activeforeground="white", relief="solid", bd=2, command=self.next_question)
         self.next_button.pack(pady=20)
 
@@ -191,16 +189,18 @@ class QuizApp:
         for widget in self.main_frame.winfo_children():
             widget.destroy()
 
+        # Styles pour la page classement :
+
         self.end_screen_frame = tk.Frame(self.root, bg="#f0f0f0")
-        self.end_screen_frame.place(relx=0.5, rely=0.65, anchor=tk.CENTER)  # Ajustement de la valeur de rely
+        self.end_screen_frame.place(relx=0.5, rely=0.65, anchor=tk.CENTER)
 
         self.end_screen_label = tk.Label(self.end_screen_frame, text="Classement :", font=("Helvetica", 16), bg="#f0f0f0", fg="#333")
         self.end_screen_label.grid(row=0, column=0, columnspan=3, pady=10)
 
         self.leaderboard_frame = tk.Frame(self.end_screen_frame, bg="#f0f0f0")
         self.leaderboard_frame.grid(row=1, column=0, columnspan=3, pady=10)
-        self.leaderboard_frame.grid_propagate(False)  # Empêche le cadre de s'adapter à la taille de son contenu
-        self.leaderboard_frame.grid_rowconfigure(0, weight=1)  # Définit la hauteur du cadre
+        self.leaderboard_frame.grid_propagate(False)
+        self.leaderboard_frame.grid_rowconfigure(0, weight=1)
 
         self.leaderboard_label = tk.Label(self.leaderboard_frame, text="", font=("Helvetica", 14), bg="#f0f0f0", fg="#333")
         self.leaderboard_label.pack()
